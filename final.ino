@@ -142,17 +142,17 @@ void updateTimeDisplay() {
     if (a == 2 && b > 0) {
         Selectnum3(b);
     } else {
-        tft.fillRect(102,33,54,16,ST77XX_BLACK);  // Сдвиг блока цифр
+        tft.fillRect(74,22,36,11,ST77XX_BLACK);
         tft.setTextColor(ST77XX_WHITE);
-        tft.setCursor(103,36+8);  // x=103 для первой цифры
+        tft.setCursor(76,24);
         tft.print(numbers[2][3]);
-        tft.setCursor(113,36+8);  // +10 от предыдущей
+        tft.setCursor(83,24);
         tft.print(numbers[2][2]);
-        tft.setCursor(121,36+8);  // +8 от предыдущей (для ":")
+        tft.setCursor(88,24);
         tft.print(":");
-        tft.setCursor(128,36+8);  // +7 от предыдущей
+        tft.setCursor(93,24);
         tft.print(numbers[2][1]);
-        tft.setCursor(139,36+8);  // +11 от предыдущей
+        tft.setCursor(100,24);
         tft.print(numbers[2][0]);
     }
 }
@@ -168,131 +168,135 @@ void updateRemainingTimeFromNumbers() {
 }
 
 void updateButtonDisplay() {
-    tft.fillRect(36-20,49+5,124,16,ST77XX_BLACK);  // -20 к X, +5 к Y
-    tft.setCursor(39-20,52+8+5);  // -20 к X, +8+5 к Y
+    tft.fillRect(24,33,83,11,ST77XX_BLACK);
+    tft.setCursor(26,35);
     tft.setTextColor(ST77XX_WHITE);
     
     if (a == 3) {
-        tft.fillRect(36-20,49+5,135,16,ST77XX_WHITE);  // -20 к X, +5 к Y
+        tft.fillRect(24,33,83,11,ST77XX_WHITE);
         tft.setTextColor(ST77XX_BLACK);
     }
     
     tft.print(buttonText);
     
+    // Отображаем "-> Yes" только для четвёртой строки
     if (a == 3) {
-        tft.setCursor(105-20,52+8+5);  // -20 к X, +8+5 к Y
+        tft.setCursor(70,35);
         tft.print("-> Yes");
     } else {
-        tft.fillRect(105-20,49+5,70,16,ST77XX_BLACK);  // -20 к X, +5 к Y
+        tft.fillRect(70,33,40,11,ST77XX_BLACK); // очищаем область "-> Yes"
     }
 }
 
 void Selectstr(int a){
-    int c = a;
-    if(c < 3){
-        tft.fillRect(0,16*c,100,16,ST77XX_WHITE);
-        tft.fillRect(0,16*((c+2)%3),100,16,ST77XX_BLACK);
-        tft.fillRect(0,16*((c+4)%3),100,16,ST77XX_BLACK);
-        tft.setCursor(3-2, 3+16*c+8);  // -2 к X, +8 к Y (сдвиг влево)
-        tft.setTextColor(ST77XX_BLACK);
-        tft.print(strings[c]);
-        tft.setCursor(3-2, 3+16*((c+2)%3)+8);  // -2 к X, +8 к Y
-        tft.setTextColor(ST77XX_WHITE);
-        tft.print(strings[((c+2)%3)]);
-        tft.setCursor(3-2, 3+16*((c+4)%3)+8);  // -2 к X, +8 к Y
-        tft.print(strings[((c+4)%3)]);
-        updateButtonDisplay();
-    } else {
-        tft.fillRect(0,0,100,16,ST77XX_BLACK);
-        tft.fillRect(0,16,100,16,ST77XX_BLACK);
-        tft.fillRect(0,32,100,16,ST77XX_BLACK);
-        tft.setTextColor(ST77XX_WHITE);
-        tft.setCursor(3-2,3+8);  // -2 к X, +8 к Y
-        tft.print(strings[0]);
-        tft.setCursor(3-2,19+8);  // -2 к X, +8 к Y
-        tft.print(strings[1]);
-        tft.setCursor(3-2,35+8);  // -2 к X, +8 к Y
-        tft.print(strings[2]);
-        updateButtonDisplay();
-    }
+  int c=a;
+  if(c<3){
+  tft.fillRect(0,11*c,72,11,ST77XX_WHITE);
+  tft.fillRect(0,11*((c+2)%3),72,11,ST77XX_BLACK);
+  tft.fillRect(0,11*((c+4)%3),72,11,ST77XX_BLACK);
+  tft.setCursor(2, 2+11*c);
+  tft.setTextColor(ST77XX_BLACK);
+  tft.print(strings[c]);
+  tft.setCursor(2, 2+11*((c+2)%3));
+  tft.setTextColor(ST77XX_WHITE);
+  tft.print(strings[((c+2)%3)]);
+  tft.setCursor(2, 2+11*((c+4)%3));
+  tft.print(strings[((c+4)%3)]);
+  updateButtonDisplay();
+  }
+  else{
+    tft.fillRect(0,0,72,11,ST77XX_BLACK);
+    tft.fillRect(0,11,72,11,ST77XX_BLACK);
+    tft.fillRect(0,22,72,11,ST77XX_BLACK);
+    tft.setTextColor(ST77XX_WHITE);
+    tft.setCursor(2,2);
+    tft.print(strings[0]);
+    tft.setCursor(2,13);
+    tft.print(strings[1]);
+    tft.setCursor(2,24);
+    tft.print(strings[2]);
+    updateButtonDisplay();
+  }
 }
 
+// Три функции листания столбов (по одной на строку)
 void Selectnum1(int b){
   int c=b;
   if(c==0){
-    tft.fillRect(0,0,100,16,ST77XX_WHITE);
-    tft.setCursor(3-2, 3+8);
+    tft.fillRect(0,0,72,11,ST77XX_WHITE);
+    tft.setCursor(2, 2);
     tft.setTextColor(ST77XX_BLACK);
     tft.print(strings[0]);
-    tft.fillRect(102,0,54,16,ST77XX_BLACK);  // Сдвиг блока цифр
+    tft.fillRect(74,0,36,11,ST77XX_BLACK);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,3+8);  // x=103 для первой цифры
+    tft.setCursor(76,2);
     tft.print(numbers[0][3]);
-    tft.setCursor(113,3+8);  // +10 от предыдущей
+    tft.setCursor(83,2);
     tft.print(numbers[0][2]);
-    tft.setCursor(121,3+8);  // +8 от предыдущей (для ".")
+    tft.setCursor(88,2);
     tft.print(".");
-    tft.setCursor(128,3+8);  // +7 от предыдущей
+    tft.setCursor(94,2);
     tft.print(numbers[0][1]);
-    tft.setCursor(139,3+8);  // +11 от предыдущей
+    tft.setCursor(101,2);
     tft.print("C");
   }
   else if(c==1){
-    tft.fillRect(0,0,100,16,ST77XX_BLACK);
-    tft.setCursor(3-2, 3+8);
+    tft.fillRect(0,0,72,11,ST77XX_BLACK);
+    tft.setCursor(2, 2);
     tft.setTextColor(ST77XX_WHITE);
     tft.print(strings[0]);
-    tft.fillRect(102,0,54,16,ST77XX_BLACK);
-    tft.fillRect(104,0,9,13,ST77XX_WHITE);  // x+1=104 (103+1), y-11=-8
+    tft.fillRect(74,0,36,11,ST77XX_BLACK);
+    tft.fillRect(75,0,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(103,3+8);  // x=103 для первой цифры
+    tft.setCursor(76,2);
     tft.print(numbers[0][3]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(113,3+8);
+    tft.setCursor(83,2);
     tft.print(numbers[0][2]);
-    tft.setCursor(121,3+8);
+    tft.setCursor(88,2);
     tft.print(".");
-    tft.setCursor(128,3+8);
+    tft.setCursor(94,2);
     tft.print(numbers[0][1]);
-    tft.setCursor(139,3+8);
+    tft.setCursor(101,2);
     tft.print("C");
   }
   else if(c==2){
-    tft.fillRect(102,0,54,16,ST77XX_BLACK);
-    tft.fillRect(114,0,9,13,ST77XX_WHITE);  // x+1=114 (113+1) для второй цифры
+    tft.fillRect(74,0,36,11,ST77XX_BLACK);
+    tft.fillRect(82,0,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(113,3+8);
+    tft.setCursor(83,2);
     tft.print(numbers[0][2]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,3+8);
+    tft.setCursor(76,2);
     tft.print(numbers[0][3]);
-    tft.setCursor(121,3+8);
+    tft.setCursor(88,2);
     tft.print(".");
-    tft.setCursor(128,3+8);
+    tft.setCursor(94,2);
     tft.print(numbers[0][1]);
-    tft.setCursor(139,3+8);
+    tft.setCursor(101,2);
     tft.print("C");
   }
   else if(c==3){
-    tft.fillRect(0,0,100,16,ST77XX_BLACK);
-    tft.setCursor(3-2, 3+8);
+    tft.fillRect(0,0,72,11,ST77XX_BLACK);
+    tft.setCursor(2, 2);
     tft.setTextColor(ST77XX_WHITE);
     tft.print(strings[0]);
-    tft.fillRect(102,0,54,16,ST77XX_BLACK);
-    tft.fillRect(129,0,9,13,ST77XX_WHITE);  // x+1=129 (128+1) для третьей цифры
+    tft.fillRect(74,0,36,11,ST77XX_BLACK);
+    tft.fillRect(93,0,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(128,3+8);
+    tft.setCursor(94,2);
     tft.print(numbers[0][1]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,3+8);
+    tft.setCursor(76,2);
     tft.print(numbers[0][3]);
-    tft.setCursor(113,3+8);
+    tft.setCursor(83,2);
     tft.print(numbers[0][2]);
-    tft.setCursor(121,3+8);
+    tft.setCursor(88,2);
     tft.print(".");
-    tft.setCursor(139,3+8);
+    tft.setCursor(101,2);
     tft.print("C");
   }
+
   
   // Если вышли из режима редактирования (b=0), обновляем отображение температуры
   if (c == 0) {
@@ -304,61 +308,61 @@ void Selectnum1(int b){
 void Selectnum2(int b){
   int c=b;
   if(c==0){
-    tft.fillRect(0,16,100,16,ST77XX_WHITE);
-    tft.setCursor(3-2, 19+8);
+    tft.fillRect(0,11,72,11,ST77XX_WHITE);
+    tft.setCursor(2, 13);
     tft.setTextColor(ST77XX_BLACK);
     tft.print(strings[1]);
-    tft.fillRect(102,16,54,16,ST77XX_BLACK);
+    tft.fillRect(74,11,36,11,ST77XX_BLACK);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,19+8);  // x=103 для первой цифры
+    tft.setCursor(76,13);
     tft.print(numbers[1][3]);
-    tft.setCursor(113,19+8);  // +10 от предыдущей
+    tft.setCursor(83,13);
     tft.print(numbers[1][2]);
-    tft.setCursor(123,19+8);  // +10 от предыдущей
+    tft.setCursor(90,13);
     tft.print(numbers[1][1]);
   }
   else if(c==1){
-    tft.fillRect(0,16,100,16,ST77XX_BLACK);
-    tft.setCursor(3-2, 19+8);
+    tft.fillRect(0,11,72,11,ST77XX_BLACK);
+    tft.setCursor(2, 13);
     tft.setTextColor(ST77XX_WHITE);
     tft.print(strings[1]);
-    tft.fillRect(102,16,54,16,ST77XX_BLACK);
-    tft.fillRect(104,16,9,13,ST77XX_WHITE);  // x+1=104 (103+1), y-11=5
+    tft.fillRect(74,11,36,11,ST77XX_BLACK);
+    tft.fillRect(75,11,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(103,19+8);  // x=103 для первой цифры
+    tft.setCursor(76,13);
     tft.print(numbers[1][3]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(113,19+8);
+    tft.setCursor(83,13);
     tft.print(numbers[1][2]);
-    tft.setCursor(123,19+8);
+    tft.setCursor(90,13);
     tft.print(numbers[1][1]);
   }
   else if(c==2){
-    tft.fillRect(102,16,54,16,ST77XX_BLACK);
-    tft.fillRect(114,16,9,13,ST77XX_WHITE);  // x+1=114 (113+1) для второй цифры
+    tft.fillRect(74,11,36,11,ST77XX_BLACK);
+    tft.fillRect(82,11,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(113,19+8);
+    tft.setCursor(83,13);
     tft.print(numbers[1][2]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,19+8);
+    tft.setCursor(76,13);
     tft.print(numbers[1][3]);
-    tft.setCursor(123,19+8);
+    tft.setCursor(90,13);
     tft.print(numbers[1][1]);
   }
   else if(c==3){
-    tft.fillRect(0,16,100,16,ST77XX_BLACK);
-    tft.setCursor(3-2, 19+8);
+    tft.fillRect(0,11,72,11,ST77XX_BLACK);
+    tft.setCursor(2, 13);
     tft.setTextColor(ST77XX_WHITE);
     tft.print(strings[1]);
-    tft.fillRect(102,16,54,16,ST77XX_BLACK);
-    tft.fillRect(124,16,9,13,ST77XX_WHITE);  // x+1=124 (123+1) для третьей цифры
+    tft.fillRect(74,11,36,11,ST77XX_BLACK);
+    tft.fillRect(89,11,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(123,19+8);
+    tft.setCursor(90,13);
     tft.print(numbers[1][1]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,19+8);
+    tft.setCursor(76,13);
     tft.print(numbers[1][3]);
-    tft.setCursor(113,19+8);
+    tft.setCursor(83,13);
     tft.print(numbers[1][2]);
   }
 }
@@ -366,104 +370,105 @@ void Selectnum2(int b){
 void Selectnum3(int b){
   int c=b;
   if(c==0){
-    tft.fillRect(0,32,100,16,ST77XX_WHITE);
-    tft.setCursor(3-2, 35+8);
+    tft.fillRect(0,22,72,11,ST77XX_WHITE);
+    tft.setCursor(2, 24);
     tft.setTextColor(ST77XX_BLACK);
     tft.print(strings[2]);
-    tft.fillRect(102,32,54,16,ST77XX_BLACK);
+    tft.fillRect(74,22,36,11,ST77XX_BLACK);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,35+8);  // x=103 для первой цифры
+    tft.setCursor(76,24);
     tft.print(numbers[2][3]);
-    tft.setCursor(113,35+8);  // +10 от предыдущей
+    tft.setCursor(83,24);
     tft.print(numbers[2][2]);
-    tft.setCursor(121,35+8);  // +8 от предыдущей (для ":")
+    tft.setCursor(88,24);
     tft.print(":");
-    tft.setCursor(128,35+8);  // +7 от предыдущей
+    tft.setCursor(93,24);
     tft.print(numbers[2][1]);
-    tft.setCursor(139,35+8);  // +11 от предыдущей
+    tft.setCursor(100,24);
     tft.print(numbers[2][0]);
   }
   else if(c==1){
-    tft.fillRect(0,32,100,16,ST77XX_BLACK);
-    tft.setCursor(3-2, 35+8);
+    tft.fillRect(0,22,72,11,ST77XX_BLACK);
+    tft.setCursor(2, 24);
     tft.setTextColor(ST77XX_WHITE);
     tft.print(strings[2]);
-    tft.fillRect(102,32,54,16,ST77XX_BLACK);
-    tft.fillRect(104,32,9,13,ST77XX_WHITE);  // x+1=104 (103+1), y-11=21
+    tft.fillRect(74,22,36,11,ST77XX_BLACK);
+    tft.fillRect(75,22,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(103,35+8);  // x=103 для первой цифры
+    tft.setCursor(76,24);
     tft.print(numbers[2][3]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(113,35+8);
+    tft.setCursor(83,24);
     tft.print(numbers[2][2]);
-    tft.setCursor(121,35+8);
+    tft.setCursor(88,24);
     tft.print(":");
-    tft.setCursor(128,35+8);
+    tft.setCursor(93,24);
     tft.print(numbers[2][1]);
-    tft.setCursor(139,35+8);
+    tft.setCursor(100,24);
     tft.print(numbers[2][0]);
   }
   else if(c==2){
-    tft.fillRect(0,32,100,16,ST77XX_BLACK);
-    tft.setCursor(3-2, 35+8);
+    tft.fillRect(0,22,72,11,ST77XX_BLACK);
+    tft.setCursor(2, 24);
     tft.setTextColor(ST77XX_WHITE);
     tft.print(strings[2]);
-    tft.fillRect(102,32,54,16,ST77XX_BLACK);
-    tft.fillRect(114,32,9,13,ST77XX_WHITE);  // x+1=114 (113+1) для второй цифры
+    tft.fillRect(74,22,36,11,ST77XX_BLACK);
+    tft.fillRect(82,22,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(113,35+8);
+    tft.setCursor(83,24);
     tft.print(numbers[2][2]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,35+8);
+    tft.setCursor(76,24);
     tft.print(numbers[2][3]);
-    tft.setCursor(121,35+8);
+    tft.setCursor(88,24);
     tft.print(":");
-    tft.setCursor(128,35+8);
+    tft.setCursor(93,24);
     tft.print(numbers[2][1]);
-    tft.setCursor(139,35+8);
+    tft.setCursor(100,24);
     tft.print(numbers[2][0]);
   }
   else if(c==3){
-    tft.fillRect(0,32,100,16,ST77XX_BLACK);
-    tft.setCursor(3-2, 35+8);
+    tft.fillRect(0,22,72,11,ST77XX_BLACK);
+    tft.setCursor(2, 24);
     tft.setTextColor(ST77XX_WHITE);
     tft.print(strings[2]);
-    tft.fillRect(102,32,54,16,ST77XX_BLACK);
-    tft.fillRect(129,32,9,13,ST77XX_WHITE);  // x+1=129 (128+1) для третьей цифры
+    tft.fillRect(74,22,36,11,ST77XX_BLACK);
+    tft.fillRect(92,22,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(128,35+8);
+    tft.setCursor(93,24);
     tft.print(numbers[2][1]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,35+8);
+    tft.setCursor(76,24);
     tft.print(numbers[2][3]);
-    tft.setCursor(113,35+8);
+    tft.setCursor(83,24);
     tft.print(numbers[2][2]);
-    tft.setCursor(121,35+8);
+    tft.setCursor(88,24);
     tft.print(":");
-    tft.setCursor(139,35+8);
+    tft.setCursor(100,24);
     tft.print(numbers[2][0]);
   }
   else if(c==4){
-    tft.fillRect(0,32,100,16,ST77XX_BLACK);
-    tft.setCursor(3-2, 35+8);
+    tft.fillRect(0,22,72,11,ST77XX_BLACK);
+    tft.setCursor(2, 24);
     tft.setTextColor(ST77XX_WHITE);
     tft.print(strings[2]);
-    tft.fillRect(102,32,54,16,ST77XX_BLACK);
-    tft.fillRect(140,32,9,13,ST77XX_WHITE);  // x+1=140 (139+1) для четвертой цифры
+    tft.fillRect(74,22,36,11,ST77XX_BLACK);
+    tft.fillRect(99,22,7,11,ST77XX_WHITE);
     tft.setTextColor(ST77XX_BLACK);
-    tft.setCursor(139,35+8);
+    tft.setCursor(100,24);
     tft.print(numbers[2][0]);
     tft.setTextColor(ST77XX_WHITE);
-    tft.setCursor(103,35+8);
+    tft.setCursor(76,24);
     tft.print(numbers[2][3]);
-    tft.setCursor(113,35+8);
+    tft.setCursor(83,24);
     tft.print(numbers[2][2]);
-    tft.setCursor(121,35+8);
+    tft.setCursor(88,24);
     tft.print(":");
-    tft.setCursor(128,35+8);
+    tft.setCursor(93,24);
     tft.print(numbers[2][1]);
   }
 }
+
 
 void ChangeNumber(int row, int position, int direction) {
     int max_value = 9;
@@ -474,9 +479,9 @@ void ChangeNumber(int row, int position, int direction) {
         }
     }
     
-    if (direction == 4) {
+    if (direction == 3) {
         numbers[row][position] = (numbers[row][position] + 1) % (max_value + 1);
-    } else if (direction == 3) {
+    } else if (direction == 4) {
         numbers[row][position] = (numbers[row][position] - 1 + (max_value + 1)) % (max_value + 1);
     }
     
@@ -498,7 +503,7 @@ void handleAlarm() {
         unsigned long currentTime = millis();
         if (currentTime - alarmStartTime >= alarmDuration) {
             // Сигнал длился 3 секунды - выключаем
-            noTone(6);
+            noTone(4);
             alarmActive = false;
         }
         // Сигнал продолжается, ничего не делаем
@@ -521,13 +526,14 @@ void handleTimer() {
                 updateButtonDisplay();
                 
                 // ОСТАНОВКА МОТОРА
-                flagg = 0;
+                digitalWrite(7,LOW);
                 motor(flagg, 0);
+                flagg=0;
                 
                 // ЗАПУСК СИГНАЛА
                 alarmActive = true;
                 alarmStartTime = millis();
-                tone(6, 1000); // Запускаем непрерывный сигнал
+                tone(4, 1000); // Запускаем непрерывный сигнал
             }
         }
     }
@@ -537,17 +543,16 @@ void handleTimer() {
 void handleMenuInput() {
     if (!inputReady) return;
     
-    // Сохраняем темперацию при уходе со строки температуры
     if (a == 0 && b == 0 && (direction == 3 || direction == 4)) {
         saveTargetTemperature();
     }
     
     // Обработка навигации по строкам
     if (b == 0) {
-        if (direction == 3) {
+        if (direction == 4) {
             a = (a + 5) % 4;
             Selectstr(a);
-        } else if (direction == 4) {
+        } else if (direction == 3) {
             a = (a + 3) % 4;
             Selectstr(a);
         }
@@ -569,7 +574,9 @@ if (a == 3 && direction == 1) {
         valuesSaved = true;
         
         // ЗАПУСК МОТОРА - флаг = 1 (работа)
+        digitalWrite(7,HIGH);
         motor(flagg, targetRPM);
+        digitalWrite(6,HIGH);
         
     } else if (strcmp(buttonText, "Stop") == 0) {
         timerPaused = true;
@@ -578,7 +585,8 @@ if (a == 3 && direction == 1) {
         
         // ОСТАНОВКА МОТОРА - флаг = 0 (стоп)
         flagg = 0;
-        motor(flagg, 0);
+        digitalWrite(7,LOW);
+        digitalWrite(6,LOW);
         
     } else if (strcmp(buttonText, "Resume") == 0) {
         timerPaused = false;
@@ -587,7 +595,10 @@ if (a == 3 && direction == 1) {
         updateButtonDisplay();
         
         // ВОЗОБНОВЛЕНИЕ МОТОРА - флаг = 1 (работа)
+        digitalWrite(7,HIGH);
+        digitalWrite(6,HIGH);
         motor(flagg, targetRPM);
+        
     }
 }
 
@@ -646,57 +657,58 @@ void setup() {
 
     // Инициализация дисплея
     tft.initR(INITR_BLACKTAB);
-    tft.setRotation(tft.getRotation()+1);
     tft.fillScreen(ST77XX_BLACK);
-    tft.setFont(&FreeMono9pt7b);
     
     // Инициализация отображения
-    tft.fillRect(0,0,100,16,ST77XX_WHITE);
-    tft.setCursor(3-2, 3+8);
-    tft.setTextColor(ST77XX_BLACK);
-    tft.setTextWrap(true);
-    tft.print(strings[0]);
-    tft.setCursor(3-2, 19+8);
-    tft.setTextColor(ST77XX_WHITE);
-    tft.setTextWrap(true);
-    tft.print(strings[1]);
-    tft.setCursor(3-2, 35+8);
-    tft.print(strings[2]);
-    tft.setCursor(39-20,52+8+5);
-    tft.print(strings[3]);
+     tft.fillRect(0,0,72,11,ST77XX_WHITE);
+  tft.setCursor(2, 2);
+  tft.setTextColor(ST77XX_BLACK);
+  tft.setTextWrap(true);
+  tft.print(strings[0]);
+  tft.setCursor(2, 13);
+  tft.setTextColor(ST77XX_WHITE);
+  tft.setTextWrap(true);
+  tft.print(strings[1]);
+  tft.setCursor(2, 24);
+  tft.print(strings[2]);
+  tft.setCursor(26,35);
+  tft.print(strings[3]);
 
-    // Отображение начальных значений
-    tft.setCursor(103,3+8);  // x=103 для первой цифры Temperature
-    tft.print(numbers[0][3]);
-    tft.setCursor(113,3+8);
-    tft.print(numbers[0][2]);
-    tft.setCursor(121,3+8);
-    tft.print(".");
-    tft.setCursor(128,3+8);
-    tft.print(numbers[0][1]);
-    tft.setCursor(139,3+8);
-    tft.print("C");
+  // Это температура
+  tft.setCursor(76,2);
+  tft.print(numbers[0][3]);
+  tft.setCursor(83,2);
+  tft.print(numbers[0][2]);
+  tft.setCursor(88,2);
+  tft.print(".");
+  tft.setCursor(94,2);
+  tft.print(numbers[0][1]);
+  tft.setCursor(101,2);
+  tft.print("C");
 
-    tft.setCursor(103,19+8);  // x=103 для первой цифры RPM
-    tft.print(numbers[1][3]);
-    tft.setCursor(113,19+8);
-    tft.print(numbers[1][2]);
-    tft.setCursor(123,19+8);
-    tft.print(numbers[1][1]);
+  // Это обороты
+  tft.setCursor(76,13);
+  tft.print(numbers[1][3]);
+  tft.setCursor(83,13);
+  tft.print(numbers[1][2]);
+  tft.setCursor(90,13);
+  tft.print(numbers[1][1]);
 
-    tft.setCursor(103,35+8);  // x=103 для первой цифры Time
-    tft.print(numbers[2][3]);
-    tft.setCursor(113,35+8);
-    tft.print(numbers[2][2]);
-    tft.setCursor(121,35+8);
-    tft.print(":");
-    tft.setCursor(128,35+8);
-    tft.print(numbers[2][1]);
-    tft.setCursor(139,35+8);
-    tft.print(numbers[2][0]);
+  // Это время
+  tft.setCursor(76,24);
+  tft.print(numbers[2][3]);
+  tft.setCursor(83,24);
+  tft.print(numbers[2][2]);
+  tft.setCursor(88,24);
+  tft.print(":");
+  tft.setCursor(93,24);
+  tft.print(numbers[2][1]);
+  tft.setCursor(100,24);
+  tft.print(numbers[2][0]);
     
     ds.begin();                       // начало считывания информации с датчика
     ds.setWaitForConversion(false);
+    pinMode(4, OUTPUT); 
     pinMode(6, OUTPUT);           // управление реле
     pinMode(7, OUTPUT);           // второе реле
 
@@ -767,13 +779,13 @@ void updateTemperatureDisplay() {
     
     // Обновляем только если значение изменилось
     if (tempToDisplay != previousDisplayedTemp || forceTemperatureRedraw) {
-        tft.fillRect(102, 0, 54, 16, ST77XX_BLACK);
+        tft.fillRect(74,0,36,11,ST77XX_BLACK);
         tft.setTextColor(ST77XX_WHITE);
-        tft.setCursor(103, 3+8);
+        tft.setCursor(76,2);
         
         // Форматируем вывод температуры
         int wholePart = (int)tempToDisplay;
-        int decimalPart = (int)((tempToDisplay - wholePart) * 10);
+        int decimalPart = (int)((tempToDisplay - wholePart) * 10 + 0.1);
         
         tft.print(wholePart / 10);      // Десятки
         tft.print(wholePart % 10);      // Единицы
@@ -825,4 +837,12 @@ void loop() {
             sensorDataReady = true;
         }
     }
+    if (currentTemperature > targetTemperature + 0.1)         // проверка на соответсвие температуры требуемой (с погрешностью)
+  {
+    digitalWrite(6, HIGH);      // отключение нагревателя
+  }
+  if (currentTemperature < targetTemperature - 0.1)
+  {
+    digitalWrite(6, LOW);       // включение нагревателя
+  }
 }
