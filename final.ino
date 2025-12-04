@@ -478,6 +478,11 @@ void ChangeNumber(int row, int position, int direction) {
             max_value = 5;
         }
     }
+    if (row == 0) {
+        if (position == 3) {
+            max_value = 4;
+        }
+    }
     
     if (direction == 3) {
         numbers[row][position] = (numbers[row][position] + 1) % (max_value + 1);
@@ -492,6 +497,11 @@ void ChangeNumber(int row, int position, int direction) {
     if (row == 0) {
         Selectnum1(b);
     } else if (row == 1) {
+        if((numbers[1][3] * 100 + numbers[1][2] * 10 + numbers[1][1])>120){
+            numbers[1][3]=1;
+            numbers[1][2]=2;
+            numbers[1][1]=0;
+        }
         Selectnum2(b);
     } else if (row == 2) {
         Selectnum3(b);
